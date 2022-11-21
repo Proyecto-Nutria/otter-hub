@@ -22,9 +22,6 @@ interface CardProps {
 }
 
 export const Card = ({tittle}: CardProps) => {
-
-	
-
 	return <div style={styles.container}>
 		<div style={styles.cardHeader}>
 			<h3>{tittle}</h3>
