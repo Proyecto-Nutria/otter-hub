@@ -1,0 +1,1 @@
+export type ProblemRank = 'easy' | 'medium' | 'hard';
