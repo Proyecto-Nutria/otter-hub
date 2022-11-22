@@ -1,26 +1,21 @@
-import React from 'react';
-import ArrowForwardCircle from 'react-ionicons/lib/ArrowForwardCircle';
+import React, { useCallback, useEffect, useState } from 'react';
+import logo from './logo.svg';
+import { Counter } from './features/counter/Counter';
 import './App.css';
-import { Button } from './components/Button';
-import { Pill } from './components/Pill';
+import { Card } from './components/Card';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { getAllProblemsAsync, selectProblems } from './slices/problemSlice';
+import { Home } from './components/Home';
 
 function App() {
+	const dispatch = useAppDispatch();
+	useEffect(() => {
+		dispatch(getAllProblemsAsync());
+	}, []);
+
 	return (
-		<div className="App">
-			<Pill content='Meta'/>
-			<Button color='action'>
-				<p>
-					Solve
-				</p>
-				<ArrowForwardCircle
-					color={'#ffffff'} 
-					style={{
-						display: 'flex',
-						height: '20px',
-						width: '20px',
-					}}
-				/>
-			</Button>
+		<div className='App'>
+			<Home />
 		</div>
 	);
 }

@@ -13,11 +13,12 @@ const style: CSSProperties = {
 	color: COLORS.white,
 	borderRadius: '99px',
 	fontFamily: 'Space Mono',
-	fontSize: 16
 };
 
-export const Pill = ({content}: PillProps) => {
-	return <div style={style}>
-		{content}
-	</div>;	
+export const Pill = ({ content }: PillProps) => {
+	return (
+		<div style={style}>
+			<p>{content}</p>
+		</div>
+	);
 };
