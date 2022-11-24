@@ -46,7 +46,9 @@ const styles: ComponentStyles = {
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		background: COLORS.background,
-		padding: '20px',
+		padding: '10px 20px',
+		fontSize: 13,
+		boxShadow: 'inset 0px 4px 4px rgba(0, 0, 0, 0.1)',
 	},
 };
 
@@ -57,6 +59,7 @@ interface CardProps {
 	difficulty: ProblemRank;
 	position: string;
 	company: string;
+	onClick?: () => void;
 }
 
 export const Card = ({
@@ -66,6 +69,7 @@ export const Card = ({
 	difficulty,
 	company,
 	position,
+	onClick,
 }: CardProps) => {
 	return (
 		<div style={styles.container}>
@@ -85,7 +89,7 @@ export const Card = ({
 				<p>
 					{company} - {position}
 				</p>
-				<Button color='action'>
+				<Button color='action' onClick={onClick}>
 					<p>Check it</p>
 					<ArrowForwardCircle
 						color={'#ffffff'}

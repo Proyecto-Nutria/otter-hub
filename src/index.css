@@ -15,10 +15,19 @@ code {
 p{
   margin: 0;
   font-family: 'Space Mono';
-  font-size: 1em;
+  font-size: 14px;
 }
 
 h1, h2, h3, h4{
   margin: 0;
   font-family: 'Fira Code';
+}
+
+button:hover{
+  box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.1)
+}
+
+section{
+  padding: 16px 25px;
+  text-align: justify
 }

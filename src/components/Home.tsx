@@ -1,25 +1,37 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
+import AddCircleOutline from 'react-ionicons/lib/AddCircleOutline';
+import ArrowBackOutline from 'react-ionicons/lib/ArrowBackOutline';
 import { useAppSelector } from '../app/hooks';
 import { COLORS } from '../generics/Colors';
 import { ComponentStyles } from '../generics/ComponentStyles';
+import { Problem } from '../generics/Problem';
 import { selectProblems } from '../slices/problemSlice';
+import { Button } from './Button';
 import { Card } from './Card';
 import { Nav } from './Nav';
+import { ProblemArticle } from './ProblemArticle';
 
 const styles: ComponentStyles = {
 	main: {
-		display: 'grid',
-		gridTemplateColumns: '1fr 2fr',
+		display: 'flex',
+		flexFlow: 'column',
 		height: '100%',
 		padding: '16px 25px',
-		gap: '44px',
+		gap: '10px',
 		background: COLORS.background,
 		borderRadius: '50px 0px 0px 0px',
+	},
+	backArrow: {
+		display: 'flex',
+		height: '25px',
+		width: '25px',
 	},
 };
 
 export const Home = () => {
 	const problems = useAppSelector(selectProblems);
+	const [problem, setProblem] = useState<Problem | null>(null);
+
 	const getCollections = useCallback(() => {
 		return (
 			<>
@@ -32,6 +44,7 @@ export const Home = () => {
 						company={problem.company}
 						position={problem.position}
 						tags={problem.tags}
+						onClick={() => setProblem(problem)}
 					/>
 				))}
 			</>
@@ -39,10 +52,37 @@ export const Home = () => {
 	}, [problems]);
 	return (
 		<>
-			<Nav tittle='Otter-Hub' />
-			<div style={styles.main}>
-				<div>{getCollections()}</div>
-				<div></div>
+			<Nav
+				tittle='Otter-Hub'
+				leftChildren={
+					<Button onClick={() => setProblem(null)}>
+						<ArrowBackOutline
+							style={styles.backArrow}
+							color={'#00000'}
+							title={'go back'}
+						/>
+					</Button>
+				}
+			/>
+			<div
+				style={{
+					...styles.main,
+					padding: problem ? '16px 0px' : styles.main.padding,
+				}}>
+				{problem == null ? (
+					<>
+						<div>{getCollections()}</div>
+						<Button color='grey' hasBorder>
+							<AddCircleOutline
+								color={'#00000'}
+								title={'Add a problem'}
+								style={styles.backArrow}
+							/>
+						</Button>
+					</>
+				) : (
+					<ProblemArticle problem={problem} />
+				)}
 			</div>
 		</>
 	);

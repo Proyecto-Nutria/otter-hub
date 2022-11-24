@@ -5,6 +5,8 @@ import { Color, COLORS } from '../generics/Colors';
 interface ButtonProps {
 	children?: ReactNode;
 	color?: Color;
+	onClick?: () => void;
+	hasBorder?: boolean;
 }
 
 const style: CSSProperties = {
@@ -19,15 +21,27 @@ const style: CSSProperties = {
 	gap: 8,
 };
 
-export const Button = ({ color = 'transparent', children }: ButtonProps) => {
-	const fontColor = tinycolor(color).isLight() ? COLORS.black : COLORS.white;
+export const Button = ({
+	color = 'transparent',
+	children,
+	onClick,
+	hasBorder,
+}: ButtonProps) => {
+	const fontColor =
+		tinycolor(color).isLight() || color == 'transparent'
+			? COLORS.black
+			: COLORS.white;
 	return (
 		<button
 			style={{
 				...style,
 				backgroundColor: COLORS[color],
 				color: fontColor,
-			}}>
+				boxShadow: hasBorder
+					? '0px 4px 4px rgba(0, 0, 0, 0.25)'
+					: 'none ',
+			}}
+			onClick={onClick}>
 			{children}
 		</button>
 	);
