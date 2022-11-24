@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from 'react';
 import AddCircleOutline from 'react-ionicons/lib/AddCircleOutline';
 import ArrowBackOutline from 'react-ionicons/lib/ArrowBackOutline';
-import { useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { COLORS } from '../generics/Colors';
 import { ComponentStyles } from '../generics/ComponentStyles';
 import { Problem } from '../generics/Problem';
 import { selectProblems } from '../slices/problemSlice';
+import { changeView } from '../slices/viewSlice';
 import { Button } from './Button';
 import { Card } from './Card';
 import { Nav } from './Nav';
@@ -29,6 +30,7 @@ const styles: ComponentStyles = {
 };
 
 export const Home = () => {
+	const dispatch = useAppDispatch();
 	const problems = useAppSelector(selectProblems);
 	const [problem, setProblem] = useState<Problem | null>(null);
 
@@ -77,6 +79,7 @@ export const Home = () => {
 								color={'#00000'}
 								title={'Add a problem'}
 								style={styles.backArrow}
+								onClick={() => dispatch(changeView('Upload'))}
 							/>
 						</Button>
 					</>

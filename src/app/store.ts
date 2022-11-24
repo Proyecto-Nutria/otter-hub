@@ -1,11 +1,13 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../slices/counterSlice';
 import { problemsReducer } from '../slices/problemSlice';
+import { viewReducer } from '../slices/viewSlice';
 
 export const store = configureStore({
 	reducer: {
 		counter: counterReducer,
 		problems: problemsReducer,
+		view: viewReducer,
 	},
 });
 
