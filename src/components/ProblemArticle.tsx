@@ -13,11 +13,13 @@ const styles: ComponentStyles = {
 		flexDirection: 'column',
 		justifyContent: 'stretch',
 		background: COLORS.white,
+		whiteSpace: 'break-spaces',
 	},
 	example: {
 		display: 'grid',
 		gridTemplateColumns: '1fr 1fr',
 		gap: '4vw',
+		whiteSpace: 'break-spaces',
 	},
 };
 export const ProblemArticle = ({ problem }: ProblemArticleProps) => {

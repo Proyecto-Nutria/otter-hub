@@ -74,7 +74,7 @@ export const Home = () => {
 				{problem == null ? (
 					<>
 						<div>{getCollections()}</div>
-						<Button color='grey' hasBorder>
+						<Button color='grey' hasBorder href='/upload'>
 							<AddCircleOutline
 								color={'#00000'}
 								title={'Add a problem'}

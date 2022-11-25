@@ -12,7 +12,7 @@ code {
     monospace;
 }
 
-p{
+p, input{
   margin: 0;
   font-family: 'Space Mono';
   font-size: 14px;

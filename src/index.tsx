@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
 import { Home } from './components/Home';
-import { Upload } from './components/Upload';
+import { Upload } from './components/Upload/Upload';
 import { Root } from './routes/Root';
 const container = document.getElementById('root')!;
 const root = createRoot(container);
