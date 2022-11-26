@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ArrowBackOutline, Send, SendOutline } from 'react-ionicons';
 import { uploadProblem } from '../../features/Problem/ProblemAPI';
 import { COLORS } from '../../generics/Colors';
@@ -36,43 +36,83 @@ export const Upload = () => {
 	const [output, setOutput] = useState('');
 	const [solution, setSolution] = useState('');
 	const [position, setPosition] = useState('');
-	const [tags, setTags] = useState('tag, tag, tag');
+	const [tags, setTags] = useState('');
 	const [isSending, setIsSending] = useState(false);
-	const onChange = (event: FunctionEvent) => {
-		/* eslint-disable indent */
-		switch (event.currentTarget.name) {
-			case 'name':
-				setName(event.currentTarget?.value);
-				break;
-			case 'company':
-				setCompany(event.currentTarget?.value);
-				break;
-			case 'position':
-				setPosition(event.currentTarget?.value);
-				break;
-			case 'level':
-				setLevel(event.currentTarget?.value as ProblemRank);
-				break;
-			case 'description':
-				setDescription(event.currentTarget?.value);
-				break;
-			case 'input':
-				setInput(event.currentTarget?.value);
-				break;
-			case 'output':
-				setOutput(event.currentTarget?.value);
-				break;
-			case 'solution':
-				setSolution(event.currentTarget?.value);
-				break;
-			case 'tags':
-				setTags(event.currentTarget?.value);
-				break;
-			default:
-				break;
-		}
-		/* eslint-enable indent */
-	};
+	const [isInvalid, setIsInvalid] = useState(true);
+
+	const values = [
+		level,
+		name,
+		company,
+		description,
+		input,
+		output,
+		solution,
+		position,
+		tags,
+	];
+
+	const setValue = useCallback(
+		(event: FunctionEvent) => {
+			/* eslint-disable indent */
+			switch (event.currentTarget.name) {
+				case 'name':
+					setName(event.currentTarget?.value);
+					break;
+				case 'company':
+					setCompany(event.currentTarget?.value);
+					break;
+				case 'position':
+					setPosition(event.currentTarget?.value);
+					break;
+				case 'level':
+					setLevel(event.currentTarget?.value as ProblemRank);
+					break;
+				case 'description':
+					setDescription(event.currentTarget?.value);
+					break;
+				case 'input':
+					setInput(event.currentTarget?.value);
+					break;
+				case 'output':
+					setOutput(event.currentTarget?.value);
+					break;
+				case 'solution':
+					setSolution(event.currentTarget?.value);
+					break;
+				case 'tags':
+					setTags(event.currentTarget?.value);
+					break;
+				default:
+					break;
+			}
+			/* eslint-enable indent */
+		},
+		[
+			setName,
+			setCompany,
+			setPosition,
+			setLevel,
+			setDescription,
+			setInput,
+			setOutput,
+			setSolution,
+			setTags,
+		]
+	);
+
+	const onChange = useCallback(
+		(event: FunctionEvent) => {
+			const isValid = event.currentTarget?.value != '';
+			setValue(event);
+			if (isValid) {
+				event.currentTarget.classList.remove('invalid');
+			} else {
+				event.currentTarget.classList.add('invalid');
+			}
+		},
+		[setValue]
+	);
 	const autoFitContent = (event: FunctionEvent) => {
 		event.currentTarget.style.height = '';
 		event.currentTarget.style.height =
@@ -81,7 +121,7 @@ export const Upload = () => {
 
 	const send = useCallback(
 		async (event: FunctionEvent) => {
-			if (isSending) return;
+			if (isSending || isInvalid) return;
 			setIsSending(true);
 			const newProblem: Problem = {
 				name,
@@ -99,8 +139,14 @@ export const Upload = () => {
 			console.log(res);
 			setIsSending(false);
 		},
-		[isSending]
+		[isSending, isInvalid, setIsSending]
 	);
+
+	useEffect(() => {
+		setIsInvalid(values.some((value) => value === ''));
+		console.log(isInvalid);
+		console.table(values);
+	}, [setIsInvalid, ...values]);
 
 	return (
 		<>
@@ -204,9 +250,13 @@ export const Upload = () => {
 					type='text'
 					value={tags}
 					onChange={onChange}
+					placeholder='tag, tag, tag'
 				/>
 				<br />
-				<Button hasBorder color='action' onClick={send}>
+				<Button
+					hasBorder
+					color={isInvalid ? 'grey' : 'action'}
+					onClick={send}>
 					<p>Send</p>
 					<Send
 						color={'#ffffff'}

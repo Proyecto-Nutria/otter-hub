@@ -28,3 +28,7 @@ input,select,textarea{
 	background: transparent;
 	border-radius: var(--size-radius);
 }
+
+.invalid{
+	background-color: red;
+}
