@@ -134,9 +134,7 @@ export const Upload = () => {
 				code: solution,
 				tags: tags.split(',').map((tag) => tag.trim()),
 			};
-			const res = await uploadProblem(newProblem);
-			console.log('res');
-			console.log(res);
+			await uploadProblem(newProblem);
 			setIsSending(false);
 		},
 		[isSending, isInvalid, setIsSending]
@@ -144,8 +142,6 @@ export const Upload = () => {
 
 	useEffect(() => {
 		setIsInvalid(values.some((value) => value === ''));
-		console.log(isInvalid);
-		console.table(values);
 	}, [setIsInvalid, ...values]);
 
 	return (
