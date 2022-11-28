@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import AddCircleOutline from 'react-ionicons/lib/AddCircleOutline';
 import ArrowBackOutline from 'react-ionicons/lib/ArrowBackOutline';
+import { useMediaQuery } from 'react-responsive';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { COLORS } from '../generics/Colors';
 import { ComponentStyles } from '../generics/ComponentStyles';
@@ -33,6 +34,10 @@ export const Home = () => {
 	const dispatch = useAppDispatch();
 	const problems = useAppSelector(selectProblems);
 	const [problem, setProblem] = useState<Problem | null>(null);
+
+	const isBigScreen = useMediaQuery({ query: '(min-width: 1824px)' });
+	const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1224px)' });
+	const isPortrait = useMediaQuery({ query: '(orientation: portrait)' });
 
 	const getCollections = useCallback(() => {
 		return (
