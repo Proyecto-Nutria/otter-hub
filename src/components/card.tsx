@@ -10,11 +10,11 @@ const styles: ComponentStyles = {
 	container: {
 		display: 'flex',
 		flexFlow: 'column',
-		maxHeight: '300px',
+		height: '300px',
 		background: COLORS.white,
 		boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
 		borderRadius: '25px',
-		overflow: 'clip ',
+		overflow: 'hidden',
 	},
 	desc: {
 		textOverflow: 'ellipsis',
@@ -22,7 +22,6 @@ const styles: ComponentStyles = {
 	},
 	upper: {
 		display: 'flex',
-		height: '197px',
 		flexDirection: 'column',
 		gap: 10,
 		overflow: 'clip ',
