@@ -1,4 +1,3 @@
-@import url("https://rsms.me/inter/inter.css");
 :root {
 	--color-light: white;
 	--color-dark: #212121;
@@ -27,8 +26,6 @@ input,select,textarea{
 	color: currentColor;
 	background: transparent;
 	border-radius: var(--size-radius);
-}
-
-.invalid{
-	background-color: red;
+	font-size: 14px;
+	font-family: 'Space Mono';
 }

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Problem } from '../generics/Problem';
+import { Problem } from '../../generics/Problem';
 import * as Realm from 'realm-web';
-import { RootState } from '../app/store';
+import { RootState } from '../store';
 
 const app = new Realm.App({
 	id: process.env.REACT_APP_MONGO_REALM_APP!,

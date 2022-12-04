@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
-import { getAllProblemsAsync } from '../slices/problemSlice';
+import { getAllProblemsAsync } from '../app/slices/problemSlice';
 
 export const Root = () => {
 	const dispatch = useAppDispatch();
