@@ -11,5 +11,6 @@ export interface Problem {
 	output: string;
 	code: string;
 	tags: string[];
+	user: string;
 	_id?: string;
 }

@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ArrowBackOutline, Send } from 'react-ionicons';
+import { useAppSelector } from '../../app/hooks';
+import { selectUser } from '../../app/slices/userSlice';
 import { uploadProblem } from '../../features/DatabaseAPI/ProblemAPI';
 import { COLORS } from '../../generics/Colors';
 import { ComponentStyles } from '../../generics/ComponentStyles';
@@ -31,6 +33,8 @@ const styles: ComponentStyles = {
 };
 
 export const UploadPortrait = () => {
+	const USER = useAppSelector(selectUser);
+
 	const [level, setLevel] = useState<ProblemRank>('easy');
 	const [name, setName] = useState('');
 	const [company, setCompany] = useState('');
@@ -139,6 +143,7 @@ export const UploadPortrait = () => {
 			output,
 			code: solution,
 			language,
+			user: USER!.user,
 			tags: tags.split(',').map((tag) => tag.trim()),
 		};
 		await uploadProblem(newProblem);

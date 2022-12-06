@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ArrowBackOutline, Send } from 'react-ionicons';
-import { useAppDispatch } from '../../app/hooks';
-import { setStatus } from '../../app/slices/userSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectUser, setStatus } from '../../app/slices/userSlice';
 import { uploadProblem } from '../../features/DatabaseAPI/ProblemAPI';
 import { COLORS } from '../../generics/Colors';
 import { ComponentStyles } from '../../generics/ComponentStyles';
@@ -47,6 +47,8 @@ const styles: ComponentStyles = {
 };
 
 export const UploadLandscape = () => {
+	const USER = useAppSelector(selectUser);
+
 	const [level, setLevel] = useState<ProblemRank>('easy');
 	const [name, setName] = useState('');
 	const [company, setCompany] = useState('');
@@ -156,6 +158,7 @@ export const UploadLandscape = () => {
 			output,
 			code: solution,
 			language,
+			user: USER!.user,
 			tags: tags.split(',').map((tag) => tag.trim()),
 		};
 		await uploadProblem(newProblem);
