@@ -39,6 +39,7 @@ export const UploadPortrait = () => {
 	const [output, setOutput] = useState('');
 	const [solution, setSolution] = useState('');
 	const [position, setPosition] = useState('');
+	const [language, setLanguage] = useState('');
 	const [tags, setTags] = useState('');
 	const [isSending, setIsSending] = useState(false);
 	const [isInvalid, setIsInvalid] = useState(true);
@@ -85,6 +86,9 @@ export const UploadPortrait = () => {
 					break;
 				case 'tags':
 					setTags(event.currentTarget?.value);
+					break;
+				case 'language':
+					setLanguage(event.currentTarget?.value);
 					break;
 				default:
 					break;
@@ -134,6 +138,7 @@ export const UploadPortrait = () => {
 			input,
 			output,
 			code: solution,
+			language,
 			tags: tags.split(',').map((tag) => tag.trim()),
 		};
 		await uploadProblem(newProblem);
@@ -236,6 +241,17 @@ export const UploadPortrait = () => {
 					name='solution'
 					value={solution}
 					onChange={onChange}
+				/>
+				<label htmlFor='language'>
+					<h3>Language</h3>
+				</label>
+				<input
+					id='language'
+					name='language'
+					type='text'
+					value={language}
+					onChange={onChange}
+					placeholder='python'
 				/>
 				<label htmlFor='tags'>
 					<h3>Comma separated tags</h3>

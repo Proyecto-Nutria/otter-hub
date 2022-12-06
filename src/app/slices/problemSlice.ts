@@ -1,24 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Problem } from '../../generics/Problem';
-import * as Realm from 'realm-web';
 import { RootState } from '../store';
-
-const app = new Realm.App({
-	id: process.env.REACT_APP_MONGO_REALM_APP!,
-});
+import { getProblems } from '../../features/DatabaseAPI/ProblemAPI';
 
 export const getAllProblemsAsync = createAsyncThunk(
 	'problem/fetchCollection',
 	async () => {
-		const user = await app.logIn(Realm.Credentials.anonymous());
-		const mongo = await user.mongoClient(
-			process.env.REACT_APP_CLUSTER_NAME as string
-		);
-		const collection = await mongo
-			.db(process.env.REACT_APP_DATABASE_NAME as string)
-			.collection(process.env.REACT_APP_COLLECTION_NAME as string);
-		const problems = await collection.find();
-		problems.forEach((problem) => (problem._id = problem._id.toString()));
+		const problems = await getProblems();
+		problems.forEach((problem) => (problem._id = problem?._id?.toString()));
 		return problems as Problem[];
 	}
 );

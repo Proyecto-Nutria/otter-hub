@@ -76,7 +76,7 @@ export const Register = () => {
 		if (!(await canRegister(user))) {
 			alert(`User -${user}- can not be created`);
 		} else {
-			const hash = bcrypt.hashSync(password, 10);
+			const hash = await bcrypt.hash(password, 10);
 			let newUser: User = {
 				user: user,
 				canRegister: false,

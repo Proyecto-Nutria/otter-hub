@@ -6,6 +6,7 @@ export interface Problem {
 	company: string;
 	difficulty: ProblemRank;
 	position: string;
+	language: string;
 	input: string;
 	output: string;
 	code: string;

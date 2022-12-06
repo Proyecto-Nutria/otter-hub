@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AddCircleOutline } from 'react-ionicons';
 import { useAppSelector } from '../../app/hooks';
 import { COLORS } from '../../generics/Colors';
@@ -8,6 +8,7 @@ import { Button } from '../Button';
 import { Card } from '../Card';
 import { Nav } from '../Nav';
 import { ProblemArticle } from '../ProblemArticle';
+import { Problem } from '../../generics/Problem';
 
 const styleLandscape: ComponentStyles = {
 	container: {
@@ -27,7 +28,7 @@ const styleLandscape: ComponentStyles = {
 	},
 	nav: {},
 	row: {
-		overflow: 'scroll',
+		overflowY: 'scroll',
 		display: 'grid',
 		gap: 20,
 		alignContent: 'space-between',
@@ -41,7 +42,11 @@ const styleLandscape: ComponentStyles = {
 };
 export const HomeLandscape = () => {
 	const problems = useAppSelector(selectProblems);
-	const problem = useMemo(() => problems[0], [problems]);
+	const [problem, setProblem] = useState<Problem | null>(null);
+	useEffect(() => {
+		setProblem(problems[0]);
+	}, [problems]);
+
 	const getCollections = useCallback(() => {
 		return (
 			<>
@@ -54,6 +59,7 @@ export const HomeLandscape = () => {
 						company={problem.company}
 						position={problem.position}
 						tags={problem.tags}
+						onClick={() => setProblem(problem)}
 					/>
 				))}
 			</>

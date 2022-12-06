@@ -39,7 +39,7 @@ export const UserCard = ({ user, password, onChange, send }: UserCardProps) => {
 
 	const wrap = {
 		...styles.wrap,
-		width: isPortrait ? '100%' : '40%',
+		width: isPortrait ? '80%' : '40%',
 	};
 	return (
 		<div style={wrap}>

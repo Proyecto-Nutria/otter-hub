@@ -2,9 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { User } from '../../generics/User';
 import { RootState } from '../store';
 
+type Status = 'idle' | 'loading' | 'failed';
 export interface UserState {
 	user: User | undefined;
-	status: 'idle' | 'loading' | 'failed';
+	status: Status;
 }
 
 const initialState: UserState = {
@@ -19,9 +20,13 @@ export const counterUser = createSlice({
 		setUser: (state, action: PayloadAction<User>) => {
 			state.user = action.payload;
 		},
+		setStatus: (state, action: PayloadAction<Status>) => {
+			state.status = action.payload;
+		},
 	},
 });
 
-export const { setUser } = counterUser.actions;
+export const { setUser, setStatus } = counterUser.actions;
 export const selectUser = (state: RootState) => state.user.user;
+export const selectStatus = (state: RootState) => state.user.status;
 export const userReducer = counterUser.reducer;

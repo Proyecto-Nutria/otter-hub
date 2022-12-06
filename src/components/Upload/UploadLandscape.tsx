@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { ArrowBackOutline, Send } from 'react-ionicons';
+import { useAppDispatch } from '../../app/hooks';
+import { setStatus } from '../../app/slices/userSlice';
 import { uploadProblem } from '../../features/DatabaseAPI/ProblemAPI';
 import { COLORS } from '../../generics/Colors';
 import { ComponentStyles } from '../../generics/ComponentStyles';
@@ -23,7 +25,7 @@ const styles: ComponentStyles = {
 			'name name company company position position level'
 			'description description description  input input output output'
 			'solution solution solution solution solution solution solution'
-			'tags tags tags tags tags button button'
+			'tags tags tags language language button button'
 	   `,
 		gridTemplateRows: 'auto 1fr 1fr auto',
 		gridTemplateColumns: 'repeat(7, 1fr)',
@@ -53,9 +55,11 @@ export const UploadLandscape = () => {
 	const [output, setOutput] = useState('');
 	const [solution, setSolution] = useState('');
 	const [position, setPosition] = useState('');
+	const [language, setLanguage] = useState('');
 	const [tags, setTags] = useState('');
 	const [isSending, setIsSending] = useState(false);
 	const [isInvalid, setIsInvalid] = useState(true);
+	const dispatch = useAppDispatch();
 
 	const values = [
 		level,
@@ -100,6 +104,9 @@ export const UploadLandscape = () => {
 				case 'tags':
 					setTags(event.currentTarget?.value);
 					break;
+				case 'language':
+					setLanguage(event.currentTarget?.value);
+					break;
 				default:
 					break;
 			}
@@ -131,6 +138,11 @@ export const UploadLandscape = () => {
 		[setValue]
 	);
 
+	useEffect(() => {
+		if (isSending) dispatch(setStatus('loading'));
+		else dispatch(setStatus('idle'));
+	}, [isSending]);
+
 	const send = useCallback(async () => {
 		if (isSending || isInvalid) return;
 		setIsSending(true);
@@ -143,6 +155,7 @@ export const UploadLandscape = () => {
 			input,
 			output,
 			code: solution,
+			language,
 			tags: tags.split(',').map((tag) => tag.trim()),
 		};
 		await uploadProblem(newProblem);
@@ -260,6 +273,19 @@ export const UploadLandscape = () => {
 						name='solution'
 						value={solution}
 						onChange={onChange}
+					/>
+				</span>
+				<span style={{ gridArea: 'language' }}>
+					<label htmlFor='language'>
+						<h3>Language</h3>
+					</label>
+					<input
+						id='language'
+						name='language'
+						type='text'
+						value={language}
+						onChange={onChange}
+						placeholder='python'
 					/>
 				</span>
 				<span style={{ gridArea: 'tags' }}>

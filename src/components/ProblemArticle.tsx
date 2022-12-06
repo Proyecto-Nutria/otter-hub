@@ -1,4 +1,6 @@
 import React from 'react';
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import { vs } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { COLORS } from '../generics/Colors';
 import { ComponentStyles } from '../generics/ComponentStyles';
 import { Problem } from '../generics/Problem';
@@ -18,7 +20,7 @@ const styles: ComponentStyles = {
 	example: {
 		display: 'grid',
 		gridTemplateColumns: '1fr 1fr',
-		gap: '4vw',
+		gridTemplateRows: 'auto 1fr',
 		whiteSpace: 'break-spaces',
 	},
 };
@@ -43,7 +45,9 @@ export const ProblemArticle = ({ problem }: ProblemArticleProps) => {
 			</section>
 			<section style={styles.description}>
 				<h3>Code solution</h3>
-				<p>{problem.code}</p>
+				<SyntaxHighlighter language={problem.language} style={vs}>
+					{problem.code}
+				</SyntaxHighlighter>
 			</section>
 		</article>
 	);

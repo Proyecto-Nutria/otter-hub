@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ArrowBackOutline } from 'react-ionicons';
 import { getUser } from '../../features/DatabaseAPI/UserAPI';
 import { COLORS } from '../../generics/Colors';
@@ -8,24 +8,32 @@ import { Button } from '../Button';
 import { Nav } from '../Nav';
 import { UserCard } from './UserCard';
 import bcrypt from 'bcryptjs';
-import { useAppDispatch } from '../../app/hooks';
-import { setUser } from '../../app/slices/userSlice';
-import { redirect } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectUser, setUser } from '../../app/slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const styles: ComponentStyles = {
 	container: {
 		display: 'grid',
 		gridTemplateRows: 'auto 1fr',
+		gridTemplateColumns: '1fr',
 		height: '100vh',
 		width: '100vw',
 		background: COLORS.background,
+		position: 'relative',
 	},
 };
 export const Login = () => {
 	const dispatch = useAppDispatch();
+	const USER = useAppSelector(selectUser);
 	const [userName, setUserName] = useState('');
 	const [password, setPassword] = useState('');
 	const [isSending, setIsSending] = useState(false);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (USER) navigate('/upload');
+	}, [USER]);
 
 	const setValue = useCallback(
 		(event: FunctionEvent) => {
@@ -60,23 +68,21 @@ export const Login = () => {
 		if (isSending) return;
 		setIsSending(true);
 		const user = await getUser(userName);
-		const correctPassword = bcrypt.compareSync(
+		const isPasswordRight = await bcrypt.compare(
 			password,
 			user?.password || ''
 		);
-		console.table({
-			...user,
-			correctPassword,
-		});
-		if (!user || !correctPassword) {
+
+		if (!user || !isPasswordRight) {
 			alert('User or password is incorrect');
 		} else {
 			dispatch(setUser(user));
 			alert('User or password is correct');
-			redirect('/');
 		}
+
 		setIsSending(false);
-	}, [userName, isSending, setIsSending]);
+	}, [password, userName, isSending, setIsSending]);
+
 	return (
 		<div style={styles.container}>
 			<Nav

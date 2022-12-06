@@ -31,6 +31,20 @@ section{
   padding: 16px 25px;
   text-align: justify
 }
+
+.root{
+  position: relative;
+}
+
 .invalid{
 	background-color: red;
+}
+
+@keyframes load{
+  from{
+      left: -100%;
+  }
+  to{
+      left: 100%;
+  }
 }
