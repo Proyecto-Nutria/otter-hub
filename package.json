@@ -29,6 +29,9 @@
     "tinycolor2": "^1.4.2",
     "web-vitals": "^2.1.4"
   },
+  "browser": {
+    "crypto": false
+},
   "scripts": {
     "start": "react-dotenv && react-scripts start",
     "build": "react-dotenv && react-scripts build",
